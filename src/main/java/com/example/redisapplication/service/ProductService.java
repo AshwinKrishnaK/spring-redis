@@ -3,6 +3,8 @@ package com.example.redisapplication.service;
 import com.example.redisapplication.model.Product;
 import com.example.redisapplication.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,6 +17,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     public String saveProduct(Product product){
         productRepository.save(product);
@@ -50,6 +55,19 @@ public class ProductService {
         return getAllProducts().stream()
                 .filter(product -> product.getQuantity() <= quantity)
                 .toList();
+    }
+
+    public Product getProductUsingCache(int id){
+        Cache cache = cacheManager.getCache("product");
+        Product cachedProduct = cache != null ? cache.get(id, Product.class) : null;
+        if(cachedProduct == null) {
+            System.out.println("Fetching from DB for id: " + id);
+            Product product = productRepository.findById(id).orElse(null);
+            cache.put(product.getId(),product);
+            return product;
+        }
+        System.out.println("Fetching from Redis for id: " + id);
+        return cachedProduct;
     }
 
 }

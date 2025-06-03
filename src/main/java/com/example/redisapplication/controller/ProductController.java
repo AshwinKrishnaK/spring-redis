@@ -21,7 +21,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") int id){
-        return productService.getProduct(id);
+        return productService.getProductUsingCache(id);
     }
 
     @PostMapping("/")
