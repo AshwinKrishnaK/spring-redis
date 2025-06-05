@@ -1,9 +1,10 @@
-# 📨 Simple Kafka Spring Boot Example
+# ⚡ Simple Spring Boot Redis Example
 
-This project demonstrates a basic **Apache Kafka** integration using **Spring Boot**, featuring:
+This project demonstrates a basic integration of **Redis** with **Spring Boot**, featuring:
 
-- ✅ Producer application that sends messages to a Kafka topic
-- ✅ Consumer application that listens to the topic and prints the received messages
+- ✅ Storing and retrieving data using Redis
+- ✅ Using Redis as a cache for faster lookups
+- ✅ Spring Boot with Spring Data Redis
 
 ---
 
@@ -11,6 +12,6 @@ This project demonstrates a basic **Apache Kafka** integration using **Spring Bo
 
 - Java 17+
 - Spring Boot 3.x
-- Apache Kafka
-- Spring Kafka
+- Spring Data Redis
+- Redis Server (local or Docker)
 - Maven
